@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <title>Sample form</title>
+  <script src="../src/jail.js"></script>
+  <script>
+    function app(event) {
+      var inputForm = document.getElementById('input');
+      inputForm.onsubmit = jailSource;
+    }
+    function jailSource(event) {
+      var sourceEl = document.getElementById('source');
+      var source = sourceEl.value;
+
+      var outputEl = document.getElementById('output');
+      var iframe = document.createElement('iframe');
+      iframe.srcdoc = source;
+      iframe.className = 'jailed';
+
+      var n;
+      while (n = outputEl.firstChild) {
+        outputEl.removeChild(n);
+      }
+
+      outputEl.appendChild(iframe);
+      jail.enhance(iframe);
+
+      event.preventDefault();
+    }
+    window.onload = app;
+  </script>
+  <style>
+    iframe.jailed {
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <form id="input">
+    <textarea id="source"></textarea>
+    <input type="submit" value="Jail"/>
+  </form>
+
+  <div>
+    <p>Before</p>
+    <div id="output"></div>
+    <p>After</p>
+  </div>
+</body>
+</html>

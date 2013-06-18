@@ -1,0 +1,20 @@
+# iframe sandbox attribute
+
+http://www.w3.org/TR/html5/embedded-content-0.html#attr-iframe-sandbox
+
+
+# iframe srcdoc attribute
+
+http://www.w3.org/TR/html5/embedded-content-0.html#attr-iframe-srcdoc
+
+
+# polyfill
+
+https://github.com/jugglinmike/srcdoc-polyfill
+
+- resize?
+
+
+# blog
+
+http://weblog.bocoup.com/third-party-javascript-development-future/
