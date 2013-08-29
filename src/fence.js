@@ -72,7 +72,9 @@
         }
     }
 
-    function render(iframe) {
+    function render(iframe, options) {
+        options = options || {};
+
         // Must only be run on <iframe>s with fenced class
         if (! iframe.tagName === 'IFRAME') {
             throw new Error('Cannot render non-iframe elements!');
@@ -81,8 +83,8 @@
             throw new Error('Cannot render iframes with no ' + fencedClass + ' class!');
         }
 
-        // if already polyfilled, nothing to be done
-        if (hasClass(iframe, polyfilledClass)) {
+        // if already polyfilled, nothing to be done (unless forced)
+        if (hasClass(iframe, polyfilledClass) && ! options.force) {
             return;
         }
 
