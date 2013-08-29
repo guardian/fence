@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <title>Sample form</title>
+  <script src="../src/fence.js"></script>
+  <script>
+    function app(event) {
+      var inputForm = document.getElementById('input');
+      inputForm.onsubmit = function() {
+        var sourceEl = document.getElementById('source');
+        var source = sourceEl.value;
+        fenceSource(source);
+      }
+    }
+
+    function fenceSource(source) {
+      var outputEl = document.getElementById('output');
+      var iframe = document.createElement('iframe');
+      iframe.srcdoc = source;
+      iframe.className = 'fenced';
+
+      var n;
+      while (n = outputEl.firstChild) {
+        outputEl.removeChild(n);
+      }
+
+      outputEl.appendChild(iframe);
+      fence.render(iframe);
+
+      event.preventDefault();
+    }
+
+
+    function fenceExample(name) {
+      fenceSource(examples[name]);
+    }
+
+    window.onload = app;
+  </script>
+  <style>
+    iframe.fenced {
+      border: 0;
+      transition: height 0.1s ease;
+    }
+    #output {
+      border: 1px solid grey;
+    }
+  </style>
+</head>
+<body>
+  <form id="input">
+    <textarea id="source"></textarea>
+    <input type="submit" value="Fence"/>
+  </form>
+
+
+  <pre id="example-twitter">
+    &lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p&gt;Guardian iPhone and Android apps get &#39;freemium&#39; updates &lt;a href=&quot;http://t.co/q1gc1od7WC&quot;&gt;http://t.co/q1gc1od7WC&lt;/a&gt;&lt;/p&gt;&mdash; Patrick Hamann (@patrickhamann) &lt;a href=&quot;https://twitter.com/patrickhamann/statuses/373004746153402368&quot;&gt;August 29, 2013&lt;/a&gt;&lt;/blockquote&gt;&lt;script async src=&quot;http://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  </pre>
+  <button onclick="fenceExample('twitter')">Fence tweet</button>
+
+
+  <pre id="example-flickr">
+    &lt;a href=&quot;http://www.flickr.com/photos/66829629@N02/9387473101/&quot; title=&quot;Untitled by jakepler1, on Flickr&quot;&gt;&lt;img src=&quot;http://farm4.staticflickr.com/3814/9387473101_2cccc1b5e4.jpg&quot; width=&quot;500&quot; height=&quot;500&quot; alt=&quot;Untitled&quot;&gt;&lt;/a&gt;
+  </pre>
+  <button onclick="fenceExample('flickr')">Fence flickr</button>
+
+  <div>
+    <p>Before</p>
+    <div id="output"></div>
+    <p>After</p>
+  </div>
+</body>
+</html>

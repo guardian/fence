@@ -1,0 +1,12 @@
+{
+  "name": "fence",
+  "version": "0.1.0",
+  "main": "src/fence.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
