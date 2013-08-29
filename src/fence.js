@@ -135,8 +135,10 @@
 
     function resizeIframe(iframe) {
         var doc = iframe.contentWindow && iframe.contentWindow.document;
-        var height = doc.height || doc.body.offsetHeight;
-        iframe.style.height = height + 'px';
+        if (doc) {
+            var height = doc.height || doc.body.offsetHeight;
+            iframe.style.height = height + 'px';
+        }
     }
 
     return {
