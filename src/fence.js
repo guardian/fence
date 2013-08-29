@@ -134,7 +134,7 @@
     }
 
     function resizeIframe(iframe) {
-        var doc = iframe.contentWindow.document;
+        var doc = iframe.contentWindow && iframe.contentWindow.document;
         var height = doc.height || doc.body.offsetHeight;
         iframe.style.height = height + 'px';
     }
