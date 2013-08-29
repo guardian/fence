@@ -19,12 +19,12 @@
         var count = 0;
         // TODO: use an exponential waiting window instead
         var timer = setInterval(function() {
-            count++;
-            resizeIframe(el);
-
             if (count === resizeTimes) {
                 clearInterval(timer);
             }
+            count++;
+
+            resizeIframe(el);
         }, resizeEvery);
 
         resizeIframe(el);
