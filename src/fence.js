@@ -76,7 +76,7 @@
         options = options || {};
 
         // Must only be run on <iframe>s with fenced class
-        if (! iframe.tagName === 'IFRAME') {
+        if (iframe.tagName !== 'IFRAME') {
             throw new Error('Cannot render non-iframe elements!');
         }
         if (! hasClass(iframe, fencedClass)) {
