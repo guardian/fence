@@ -133,6 +133,7 @@
         var body = iframe.contentWindow.document.body;
         body.style.padding = 0;
         body.style.margin = 0;
+        body.style.overflow = 'hidden';
     }
 
     function resizeIframe(iframe) {
