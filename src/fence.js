@@ -144,8 +144,18 @@
         }
     }
 
+    function isSafeCode(html) {
+        var holder = document.createElement('div');
+        holder.innerHTML = html.trim();
+        var element = holder.firstChild;
+        var isIframe = element && element.tagName === 'IFRAME';
+        var singleChild = element && ! element.nextSibling;
+        return isIframe && singleChild;
+    }
+
     return {
         render: render,
-        renderAll: renderAll
+        renderAll: renderAll,
+        isSafeCode: isSafeCode
     };
 }));
