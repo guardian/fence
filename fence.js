@@ -1,8 +1,5 @@
-(function (name, context, definition) {
-  if (typeof module !== 'undefined' && module.exports) { module.exports = definition(); }
-  else if (typeof define === 'function' && define.amd) { var d = define; d(definition); }
-  else { context[name] = definition(); }
-}('fence', this, function() {
+(function(define) {
+define(function () {
 
     var fencedClass = 'fenced';
     var polyfilledClass = 'fenced-polyfilled';
@@ -175,4 +172,13 @@
         isSafeCode: isSafeCode,
         wrap: wrap
     };
-}));
+});
+})(
+    // AMD
+    typeof define === 'function' && define.amd ? define :
+    // CommonJS
+   (typeof module !== 'undefined' && module.exports ?
+        function (factory) { module.exports = factory(); } :
+    // Globals
+    function (factory) { this['fence'] = factory(); })
+);
