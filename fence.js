@@ -1,5 +1,6 @@
-(function(define) {
-define(function () {
+(function(def) {
+/* Do not use `define' name as that gets intercepted by r.js at compile-time */
+def(function () {
 
     var fencedClass = 'fenced';
     var polyfilledClass = 'fenced-polyfilled';
