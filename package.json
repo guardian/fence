@@ -1,6 +1,6 @@
 {
   "name": "fence",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Utility to render fenced embeds in iframes",
   "main": "src/fence.js",
   "directories": {
