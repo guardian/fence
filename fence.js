@@ -153,11 +153,18 @@
         return isIframe && singleChild;
     }
 
+
+    function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+    }
+
     function wrap(html) {
         if (isSafeCode(html)) {
             return html;
         } else {
-            var escapedHtml = html // FIXME: escape?
+            var escapedHtml = escapeHtml(html).replace(/\"/g, '&quot;');
             return '<iframe srcdoc="' +escapedHtml+ '" class="' +fencedClass+ '"></iframe>';
         }
     }
