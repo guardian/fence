@@ -153,9 +153,19 @@
         return isIframe && singleChild;
     }
 
+    function wrap(html) {
+        if (isSafeCode(html)) {
+            return html;
+        } else {
+            var escapedHtml = html // FIXME: escape?
+            return '<iframe srcdoc="' +escapedHtml+ '" class="' +fencedClass+ '"></iframe>';
+        }
+    }
+
     return {
         render: render,
         renderAll: renderAll,
-        isSafeCode: isSafeCode
+        isSafeCode: isSafeCode,
+        wrap: wrap
     };
 }));

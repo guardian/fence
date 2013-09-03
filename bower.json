@@ -1,7 +1,7 @@
 {
   "name": "fence",
-  "version": "0.2.1",
-  "main": "src/fence.js",
+  "version": "0.2.2",
+  "main": "fence.js",
   "ignore": [
     "**/.*",
     "node_modules",
