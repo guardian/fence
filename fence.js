@@ -100,6 +100,7 @@ define(function () {
         iframe.style.height = 0;
         iframe.frameBorder = 0;
         iframe.style.border = 'none';
+        iframe.style.overflow = 'hidden';
         iframe.width = '100%';
 
         var supportsSrcdoc = !!iframe.srcdoc;
@@ -135,7 +136,7 @@ define(function () {
     function resizeIframe(iframe) {
         var doc = iframe.contentWindow && iframe.contentWindow.document;
         if (doc) {
-            var height = doc.height || doc.body.offsetHeight;
+            var height = doc.documentElement.clientHeight || doc.body.offsetHeight;
             iframe.style.height = height + 'px';
         }
     }
