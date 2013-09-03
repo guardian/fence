@@ -1,6 +1,4 @@
-(function(def) {
-/* Do not use `define' name as that gets intercepted by r.js at compile-time */
-def(function () {
+define(function () {
 
     var fencedClass = 'fenced';
     var polyfilledClass = 'fenced-polyfilled';
@@ -174,12 +172,3 @@ def(function () {
         wrap: wrap
     };
 });
-})(
-    // AMD
-    typeof define === 'function' && define.amd ? define :
-    // CommonJS
-   (typeof module !== 'undefined' && module.exports ?
-        function (factory) { module.exports = factory(); } :
-    // Globals
-    function (factory) { this['fence'] = factory(); })
-);
