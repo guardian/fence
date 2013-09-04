@@ -32,11 +32,6 @@ define(function () {
         }, 0);
     }
 
-    // function embedIsTooLarge(iframe) {
-    //     var embedWidth = iframe.getAttribute('data-embed-width');
-    //     return embedWidth && embedWidth > window.innerWidth;
-    // }
-
     function replaceElement(elToRemove, elToInsert) {
         if (elToRemove.nextSibling) {
             elToRemove.parentNode.insertBefore(elToInsert, elToRemove.nextSibling);
@@ -91,19 +86,7 @@ define(function () {
             return;
         }
 
-        // FIXME: uh? use width as min width instead?
-        // if (embedIsTooLarge(iframe)) {
-        //     var p = document.createElement('p');
-        //     var message = "embed is too large";
-        //     var embedURL = iframe.getAttribute('data-embed-url');
-        //     if (embedURL) {
-        //         message = "<a href='" + embedURL + "'>View embedded content</a>";
-        //     }
-        //     p.innerHTML = message;
-        //     replaceElement(iframe, p);
-        //     return;
-        // }
-
+        // Reset iframe styling
         iframe.style.height = 0;
         iframe.frameBorder = 0;
         iframe.style.border = 'none';
