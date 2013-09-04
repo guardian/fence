@@ -154,7 +154,8 @@ define(function () {
             return html;
         } else {
             var escapedHtml = escapeHtml(html).replace(/\"/g, '&quot;');
-            return '<iframe srcdoc="' +escapedHtml+ '" class="' +fencedClass+ '"></iframe>';
+            var htmlDoc = '<html><head></head><body>' +escapedHtml+ '</body></html>';
+            return '<iframe srcdoc="' +htmlDoc+ '" class="' +fencedClass+ '"></iframe>';
         }
     }
 
