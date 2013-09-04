@@ -7,11 +7,6 @@ define(function () {
     var resizeTimes = 5;
 
     function done(el) {
-        // We need to yield before setting those, for some reason
-        setTimeout(function() {
-            normalizeIframe(el);
-        }, 0);
-
         var count = 0;
         // TODO: use an exponential waiting window instead
         var timer = setInterval(function() {
@@ -20,8 +15,14 @@ define(function () {
             }
             count++;
 
+            normalizeIframe(el);
             resizeIframe(el);
         }, resizeEvery);
+
+        // We need to yield before normalizing, for some reason
+        setTimeout(function() {
+            normalizeIframe(el);
+        }, 0);
 
         resizeIframe(el);
     }
@@ -129,9 +130,11 @@ define(function () {
 
     function normalizeIframe(iframe) {
         var body = iframe.contentWindow.document.body;
-        body.style.padding = 0;
-        body.style.margin = 0;
-        body.style.overflow = 'hidden';
+        if (body) {
+            body.style.padding = 0;
+            body.style.margin = 0;
+            body.style.overflow = 'hidden';
+        }
     }
 
     function resizeIframe(iframe) {
