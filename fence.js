@@ -128,7 +128,8 @@ define(function () {
     function resizeIframe(iframe) {
         var doc = iframe.contentWindow && iframe.contentWindow.document;
         if (doc) {
-            var height = doc.documentElement.scrollHeight || doc.body.scrollHeight;
+            var height = (doc.documentElement && doc.documentElement.scrollHeight) ||
+                         (doc.body && doc.body.scrollHeight) || 0;
             iframe.style.height = height + 'px';
         }
     }
