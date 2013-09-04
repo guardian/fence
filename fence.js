@@ -1,7 +1,7 @@
 define(function () {
 
     var fencedClass = 'fenced';
-    var polyfilledClass = 'fenced-polyfilled';
+    var polyfilledClass = 'fenced-rendered';
 
     var resizeEvery = 1000; // milliseconds
     var resizeTimes = 5;
@@ -61,7 +61,7 @@ define(function () {
     function renderAll() {
         // Get all embed iframes that have not been fully rendered yet.
         // TODO: backward compat?
-        var selector = 'iframe.' + fencedClass+ ':not(.' + polyfilledClass + ')';
+        var selector = 'iframe.' + fencedClass;
         var iframes = document.querySelectorAll(selector);
 
         for (var i = 0, l = iframes.length; i < l; ++i) {
