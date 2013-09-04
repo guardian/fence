@@ -80,7 +80,8 @@ define(function () {
         }
 
         // if already polyfilled, nothing to be done (unless forced)
-        if (hasClass(iframe, polyfilledClass) && ! options.force) {
+        var alreadyRendered = hasClass(iframe, polyfilledClass);
+        if (alreadyRendered && ! options.force) {
             return;
         }
 
@@ -105,10 +106,10 @@ define(function () {
 
         var supportsSrcdoc = !!iframe.srcdoc;
         if (supportsSrcdoc) {
-            // srcdoc is supported, add done listener
+            // srcdoc is supported, add done listener (first time only)
             if (iframe.contentWindow.document.readyState === 'complete') {
                 done(iframe);
-            } else {
+            } else if (! alreadyRendered) {
                 iframe.addEventListener('load', function() {
                     done(iframe);
                 }, false);
