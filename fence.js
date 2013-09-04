@@ -136,7 +136,7 @@ define(function () {
     function resizeIframe(iframe) {
         var doc = iframe.contentWindow && iframe.contentWindow.document;
         if (doc) {
-            var height = doc.documentElement.clientHeight || doc.body.offsetHeight;
+            var height = doc.documentElement.scrollHeight || doc.body.scrollHeight;
             iframe.style.height = height + 'px';
         }
     }
