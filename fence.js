@@ -3,28 +3,33 @@ define(function () {
     var fencedClass = 'fenced';
     var polyfilledClass = 'fenced-rendered';
 
-    var resizeEvery = 1000; // milliseconds
-    var resizeTimes = 5;
+    var resizeInit = 300; // milliseconds
+    var resizeTimes = 12;
+
+    // Run the callback multiple times in a loop, incrementing the
+    // wait window using a fibonacci sequence
+    function loop(callback, times, thisWait, lastWait) {
+        lastWait = lastWait || 0;
+
+        callback();
+
+        if (times > 0) {
+            // Schedule again and increase wait window
+            setTimeout(function() {
+                var nextWait = thisWait + lastWait;
+                loop(callback, times - 1, nextWait, thisWait);
+            }, thisWait);
+        }
+    }
 
     function done(el) {
-        var count = 0;
-        // TODO: use an exponential waiting window instead
-        var timer = setInterval(function() {
-            if (count === resizeTimes) {
-                clearInterval(timer);
-            }
-            count++;
-
-            normalizeIframe(el);
-            resizeIframe(el);
-        }, resizeEvery);
-
-        // We need to yield before normalizing, for some reason
+        // We need to yield before starting this, for some reason
         setTimeout(function() {
-            normalizeIframe(el);
+            loop(function() {
+                normalizeIframe(el);
+                resizeIframe(el);
+            }, resizeTimes, resizeInit);
         }, 0);
-
-        resizeIframe(el);
     }
 
     // function embedIsTooLarge(iframe) {
