@@ -117,7 +117,8 @@ define(function () {
     }
 
     function normalizeIframe(iframe) {
-        var body = iframe.contentWindow.document.body;
+        var doc = iframe.contentWindow && iframe.contentWindow.document;
+        var body = doc && doc.body;
         if (body) {
             body.style.padding = 0;
             body.style.margin = 0;
