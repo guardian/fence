@@ -1,46 +1,186 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <script src="http://pasteup.guim.co.uk/js/lib/requirejs/2.1.5/require.min.js"></script>
-        <!-- endbuild -->
-    </head>
-    <body>
-    <div class="container">
-        <h1>Embeds</h1>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Fence demo</title>
+  <script>
+    // Extremely poor man's AMD
+    function define(f) {
+      window.fence = f();
+    }
+  </script>
+  <script src="../fence.js"></script>
+  <script>
+    function app() {
+      var forEach = Array.prototype.forEach;
 
-        <iframe class="fenced" srcdoc="&lt;script&gt;document.write('a doc write');&lt;/script&gt; "></iframe>
+      var sourceEl  = document.getElementById('source');
+      var previewEl = document.getElementById('preview');
+      var codeEl    = document.getElementById('code');
+      var embedEl   = document.getElementById('embed');
 
-        <iframe class="fenced" srcdoc="<div id='DC-note-60903' class='DC-note-container'></div><script src='http://s3.documentcloud.org/notes/loader.js'></script><script>dc.embed.loadNote('http://www.documentcloud.org/documents/371660/annotations/60903.js');
-</script>"></iframe>
+      var inputForm = document.getElementById('input');
+      inputForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        render();
+      });
 
-        <iframe class="fenced" srcdoc="<div style='display:none'></div><script language='JavaScript' type='text/javascript' src='http://admin.brightcove.com/js/BrightcoveExperiences.js'></script><object id='myExperience2236632036001' class='BrightcoveExperience'><param name='bgcolor' value='#FFFFFF' /><param name='width' value='740 /><param name='height' value='432' /><param name='playerID' value='2236101142001' /><param name='playerKey' value='AQ~~,AAAB9FzAoQE~,N298q3_U8K7xy-MTZ9RJjmPgNFzzwACi' /><param name='isVid' value='true' /><param name='isUI' value='true' /><param name='dynamicStreaming' value='true' /><param name='@videoPlayer' value='2236632036001' /></object><script type='text/javascript'>brightcove.createExperiences();</script>" embed-url=""></iframe>
+      var loaders = document.querySelectorAll('.load-code');
+      forEach.call(loaders, function(loader) {
+        loader.addEventListener('click', function() {
+          var template = loader.getAttribute('data-template');
+          loadCode(template);
+          render();
+        });
+      });
 
-        <iframe class="fenced" srcdoc="<blockquote class='twitter-tweet'><p>Guardian iPhone and Android apps get &#39;freemium&#39; updates <a href='http://t.co/q1gc1od7WC'>http://t.co/q1gc1od7WC</a></p>&mdash; Patrick Hamann (@patrickhamann) <a href='https://twitter.com/patrickhamann/statuses/373004746153402368'>August 29, 2013</a></blockquote><script async src='http://platform.twitter.com/widgets.js' charset='utf-8'></script>" data-embed-url="https://twitter.com/patrickhamann/status/373004746153402368"></iframe>
 
-        <iframe class="fenced" srcdoc="<a href='http://www.flickr.com/photos/66829629@N02/9387473101/' title='Untitled by jakepler1, on Flickr'><img src='http://farm4.staticflickr.com/3814/9387473101_2cccc1b5e4.jpg' width='500' height='500' alt='Untitled'></a>" data-embed-url="http://www.flickr.com/photos/66829629@N02/9387473101/"></iframe>
+      function render() {
+        var source = sourceEl.value;
 
-        <iframe class="fenced" srcdoc="<script src='http://occipital.com/360/embed.js?pano=kbzmxd&width=640&height=480'></script>" data-embed-url="http://360.io/kbzmxd"></iframe>
+        var sourceIsSafe = fence.isSafeCode(source);
+        var fencedSource = fence.wrap(source);
+        codeEl.value = fencedSource;
+        previewEl.classList.toggle('is-safe', sourceIsSafe);
+        previewEl.classList.toggle('is-unsafe', ! sourceIsSafe);
 
-        <iframe class="fenced" srcdoc="<iframe src='http://instagram.com/p/dHPTXXzLu3/embed/' width='612' height='710' frameborder='0' scrolling='no' allowtransparency='true'></iframe>" data-embed-url="http://instagram.com/p/dHPTXXzLu3"></iframe>
+        embedEl.innerHTML = fencedSource;
+        window.fence.render(embedEl.firstChild);
+      }
 
-        <iframe class="fenced" srcdoc="<iframe src='http://www.youtube.com/embed/X_f7IqYEk-w' frameborder='0' allowfullscreen></iframe>" data-embed-url="http://www.youtube.com/watch?v=X_f7IqYEk-w" data-embed-width="560"></iframe>
+      function trimWhitespace(string) {
+        return string.trim().split("\n").map(function(line) {
+          return line.trim();
+        }).join("\n");
+      }
 
-        <iframe class="fenced" srcdoc="<iframe width='560' height='315' src='http://www.youtube.com/embed/X_f7IqYEk-w' frameborder='0' allowfullscreen></iframe>" data-embed-url="http://www.youtube.com/watch?v=X_f7IqYEk-w" data-embed-width="560"></iframe>
+      function loadCode(name) {
+        var code = document.getElementById(name);
+        sourceEl.value = trimWhitespace(code.innerHTML);
+      }
+    }
 
-    </div>
+    window.onload = app;
+  </script>
+  <style>
+    ul, li {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      float: left;
+    }
+
+    textarea {
+      width: 40em;
+      height: 12em;
+      clear: both;
+    }
+    #embed {
+      border: 1px solid #ccc;
+    }
+
+    .code-safety {
+      display: none;
+    }
+    .is-safe .code-safety.code-safety-safe,
+    .is-unsafe .code-safety.code-safety-unsafe {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fence demo</h1>
+
+  <form id="input">
+    <ul>
+      <li>
+        <ul>
+          <li><button class="load-code" data-template="plain">Plain HTML</button></li>
+          <li><button class="load-code" data-template="docwrite">document.write</button></li>
+          <li><button class="load-code" data-template="sync">synchronous loading</button></li>
+          <li><button class="load-code" data-template="broken">broken code</button></li>
+        </ul>
+        <ul>
+          <li><button class="load-code" data-template="tweet">Tweet</button></li>
+          <li><button class="load-code" data-template="youtube">YouTube</button></li>
+          <li><button class="load-code" data-template="instagram">Instagram</button></li>
+          <li><button class="load-code" data-template="flickr">Flickr</button></li>
+          <li><button class="load-code" data-template="documentcloud">DocumentCloud</button></li>
+          <li><button class="load-code" data-template="brightcove">Brightcove</button></li>
+          <li><button class="load-code" data-template="occipital">Occipital</button></li>
+        </ul>
+      </li>
+    </ul>
+
+    <textarea id="source"></textarea>
+    <input type="submit" value="Fence it!"/>
+    <!-- FIXME: button to inline without fence? -->
+  </form>
+
+  <div id="preview">
+    <textarea id="code"></textarea>
+    <p class="code-safety code-safety-safe"><strong>Safe embed</strong>, injecting as-is</p>
+    <p class="code-safety code-safety-unsafe"><strong>Unsafe embed</strong>, sandboxing in fenced iframe</p>
+  </div>
+
+  <div id="embed"></div>
+
+
+  <!-- Sample embed codes -->
+
+  <template id="plain">
+    <p>A paragraph.</p>
+    <p>And another.</p>
+  </template>
+
+  <template id="tweet">
+    <blockquote class="twitter-tweet"><p>On our blog today: how we ship software on our new responsive site: <a href="http://t.co/pDN4nsrHuV">http://t.co/pDN4nsrHuV</a> simple deploys, A/B tests and dashboards.</p>&mdash; Guardian Developers (@gdndevelopers) <a href="https://twitter.com/gdndevelopers/statuses/381003775995285504">September 20, 2013</a></blockquote>
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </template>
+
+  <template id="youtube">
+    <iframe width="420" height="315" src="//www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+  </template>
+
+  <template id="instagram">
+    <iframe src="//instagram.com/p/a_ifSezLvX/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+  </template>
+
+  <template id="flickr">
+    <a href="http://www.flickr.com/photos/theefer/5728000245/" title="Chinglish by theefer, on Flickr"><img src="http://farm4.staticflickr.com/3378/5728000245_16e86f41c2.jpg" width="500" height="375" alt="Chinglish"></a>
+  </template>
+
+  <template id="documentcloud">
+    <div id="DC-note-60903" class="DC-note-container"></div><script src="http://s3.documentcloud.org/notes/loader.js"></script><script>dc.embed.loadNote("http://www.documentcloud.org/documents/371660/annotations/60903.js");</script>
+  </template>
+
+  <template id="brightcove">
+    <div style="display:none"></div><script language="JavaScript" type="text/javascript" src="http://admin.brightcove.com/js/BrightcoveExperiences.js"></script><object id="myExperience2236632036001" class="BrightcoveExperience"><param name="bgcolor" value="#FFFFFF" /><param name="width" value="740" /><param name="height" value="432" /><param name="playerID" value="2236101142001" /><param name="playerKey" value="AQ~~,AAAB9FzAoQE~,N298q3_U8K7xy-MTZ9RJjmPgNFzzwACi" /><param name="isVid" value="true" /><param name="isUI" value="true" /><param name="dynamicStreaming" value="true" /><param name="@videoPlayer" value="2236632036001" /></object><script type="text/javascript">brightcove.createExperiences();</script>
+  </template>
+
+  <template id="occipital">
+    <script src="http://occipital.com/360/embed.js?pano=kbzmxd&width=640&height=480"></script>
+  </template>
+
+
+  <template id="docwrite">
     <script>
-        require(['../fence.js'], function(embed) {
-            embed.renderAll();
-        })
+      document.write("<p>legacy javascript...</p>");
     </script>
+  </template>
+
+  <template id="sync">
+    <script src="sync.js"></script>
+    <script>
+      // sync expected to have been loaded synchronously
+      sync.run();
+    </script>
+  </template>
+
+  <template id="broken">
+    <script>
+      bad.code();
+    </script>
+  </template>
 </body>
 </html>
