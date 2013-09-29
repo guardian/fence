@@ -1,4 +1,5 @@
 * Write README.md
-* Tests!
-* Helper to generate fenced iframe
-* Nicer demo, incl. demo of what happens if you embed in unsafe way
+* Tests! (use Travis?)
+* Demo:
+  * styling
+  * what happens if you embed in unsafe way

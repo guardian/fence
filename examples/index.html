@@ -3,15 +3,9 @@
 <head>
   <meta charset="utf-8"/>
   <title>Fence demo</title>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js"></script>
   <script>
-    // Extremely poor man's AMD
-    function define(f) {
-      window.fence = f();
-    }
-  </script>
-  <script src="../fence.js"></script>
-  <script>
-    function app() {
+  require(['../fence'], function(fence) {
       var forEach = Array.prototype.forEach;
 
       var sourceEl  = document.getElementById('source');
@@ -21,46 +15,46 @@
 
       var inputForm = document.getElementById('input');
       inputForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        render();
+          event.preventDefault();
+          render();
       });
 
       var loaders = document.querySelectorAll('.load-code');
       forEach.call(loaders, function(loader) {
-        loader.addEventListener('click', function() {
-          var template = loader.getAttribute('data-template');
-          loadCode(template);
-          render();
-        });
+          loader.addEventListener('click', function() {
+              var template = loader.getAttribute('data-template');
+              loadCode(template);
+              render();
+          });
       });
 
 
       function render() {
-        var source = sourceEl.value;
+          var source = sourceEl.value;
 
-        var sourceIsSafe = fence.isSafeCode(source);
-        var fencedSource = fence.wrap(source);
-        codeEl.value = fencedSource;
-        previewEl.classList.toggle('is-safe', sourceIsSafe);
-        previewEl.classList.toggle('is-unsafe', ! sourceIsSafe);
+          var sourceIsSafe = fence.isSafeCode(source);
+          var fencedSource = fence.wrap(source);
+          codeEl.value = fencedSource;
+          previewEl.classList.toggle('is-safe', sourceIsSafe);
+          previewEl.classList.toggle('is-unsafe', ! sourceIsSafe);
 
-        embedEl.innerHTML = fencedSource;
-        window.fence.render(embedEl.firstChild);
+          embedEl.innerHTML = fencedSource;
+          if (! sourceIsSafe) {
+              fence.render(embedEl.firstChild);
+          }
       }
 
       function trimWhitespace(string) {
-        return string.trim().split("\n").map(function(line) {
-          return line.trim();
-        }).join("\n");
+          return string.trim().split("\n").map(function(line) {
+              return line.trim();
+          }).join("\n");
       }
 
       function loadCode(name) {
-        var code = document.getElementById(name);
-        sourceEl.value = trimWhitespace(code.innerHTML);
+          var code = document.getElementById(name);
+          sourceEl.value = trimWhitespace(code.innerHTML);
       }
-    }
-
-    window.onload = app;
+  });
   </script>
   <style>
     ul, li {
