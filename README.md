@@ -101,7 +101,7 @@ $ npm install
 $ grunt connect
 ```
 
-Then open http://localhost:9001/examples/ in your browser.
+Then open [http://localhost:9001/examples/](http://localhost:9001/examples/) in your browser.
 
 
 ## FAQ
