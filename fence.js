@@ -96,7 +96,8 @@ define(function () {
         var supportsSrcdoc = !!iframe.srcdoc;
         if (supportsSrcdoc) {
             // srcdoc is supported, add done listener (first time only)
-            if (iframe.contentWindow.document.readyState === 'complete') {
+            // if contentWindow is undefined then wait for the load event
+            if (iframe.contentWindow && iframe.contentWindow.document.readyState === 'complete') {
                 done(iframe);
             } else if (! alreadyRendered) {
                 iframe.addEventListener('load', function() {
