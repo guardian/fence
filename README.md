@@ -82,10 +82,10 @@ fence.renderAll();
 ## Installation
 
 The easiest way to install fence to use in your web application is
-through [Bower](http://bower.io/):
+through [NPM](https://www.npmjs.com/package/@guardian/fence):
 
 ```
-$ bower install fence
+$ npm install @guardian/fence
 ```
 
 Then simply point your AMD config to the fence.js file and you're
