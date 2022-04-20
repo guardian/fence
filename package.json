@@ -1,6 +1,6 @@
 {
   "name": "@guardian/fence",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "Utility to render fenced embeds in iframes",
   "main": "fence.js",
   "directories": {
