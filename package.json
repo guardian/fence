@@ -1,11 +1,14 @@
 {
   "name": "@guardian/fence",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "Utility to render fenced embeds in iframes",
   "main": "fence.js",
   "directories": {
     "examples": "examples"
   },
+  "files": [
+    "Gruntfile.js"
+  ],
   "scripts": {
     "test": "grunt test"
   },
