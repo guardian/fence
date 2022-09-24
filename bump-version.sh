@@ -16,4 +16,4 @@ git show $V
 
 echo "Press ENTER to git push new version, or CTRL-C to abort"
 read
-git push origin master $V
+git push origin main $V
